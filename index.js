@@ -91,12 +91,18 @@ Nanobus.prototype.listeners = function (eventName) {
   return ret
 }
 
-Nanobus.prototype._emit = function (arr, eventName, data) {
+Nanobus.prototype._emit = function (listeners, eventName, data) {
+  var arr = []
+  var j = listeners.length
+  var length = j
+
+  while (j--) arr[j] = listeners[j]
+
   if (!data) {
     data = eventName
     eventName = null
   }
-  var length = arr.length
+
   for (var i = 0; i < length; i++) {
     var listener = arr[i]
     if (eventName) listener(eventName, data)
